@@ -42,60 +42,99 @@ function buildPrompt(formData: WorkoutFormData): string {
       }).join(', ')
     : 'Nenhuma condição especial';
 
-  return `Você é um personal trainer especialista com 20 anos de experiência. Crie um treino de musculação personalizado baseado nos seguintes dados do cliente:
+  return `ROLE:
 
-**PERFIL FÍSICO:**
-- Idade: ${perfil.idade} anos
-- Sexo: ${perfil.sexo}
-- Altura: ${perfil.altura}cm
-- Peso: ${perfil.peso}kg
-- IMC: ${perfil.imc}
+Você é um treinador físico profissional certificado, com experiência em prescrição de treinos personalizados baseados em evidências científicas, considerando limitações físicas, condições de saúde e nível de condicionamento.
+OBJETIVO:
 
-**ESTILO DE VIDA:**
-- Nível de atividade: ${activityLabels[saude.nivelAtividade]}
-- Condições especiais de saúde: ${healthConditionsText}
+Criar um plano de treino seguro, eficaz e personalizado para o usuário com base nos dados fornecidos.
+📥 DADOS DO USUÁRIO
 
-**PREFERÊNCIAS DE TREINO:**
-- Objetivo principal: ${goalLabels[preferencias.objetivo]}
-- Dias disponíveis para treinar: ${preferencias.diasDisponiveis} dias por semana
-- Tempo disponível por treino: ${preferencias.tempoPorTreino} minutos
+Idade: ${perfil.idade}
 
-**INSTRUÇÕES IMPORTANTES:**
-1. Crie um treino dividido em ${preferencias.diasDisponiveis} dia(s) por semana
-2. Cada treino deve durar aproximadamente ${preferencias.tempoPorTreino} minutos
-3. Respeite TODAS as condições de saúde e limitações físicas mencionadas
-4. Para cada exercício, especifique: nome, séries, repetições, carga sugerida (em kg ou "peso corporal"), tempo de descanso e observações de segurança
-5. Inclua aquecimento específico no início de cada treino
-6. Adapte a intensidade conforme o nível de atividade do cliente
-7. Se houver condições especiais, inclua modificações e alternativas seguras
+Sexo: ${perfil.sexo}
 
-**FORMATO DE RESPOSTA (JSON obrigatório):**
+Altura: ${perfil.altura} cm
+
+Peso: ${perfil.peso} kg
+
+IMC: ${perfil.imc}
+
+Nível de atividade: ${activityLabels[saude.nivelAtividade]}
+Condições especiais:
+
+${healthConditionsText}
+Objetivo do usuário:
+
+${goalLabels[preferencias.objetivo]}
+⚠️ REGRAS IMPORTANTES
+
+Priorize segurança acima de performance
+
+Adapte exercícios para quaisquer limitações ou condições médicas
+
+Evite exercícios de risco quando houver:
+Hipertensão → evitar picos de esforço
+
+Diabetes → considerar controle glicêmico
+
+Gravidez → evitar impacto e compressão abdominal
+
+Lesões → substituir exercícios afetados
+
+Ajuste intensidade com base no nível de atividade:
+Sedentário → início leve
+
+Intermediário → progressão moderada
+
+Avançado → maior volume/intensidade
+🏋️ FORMATO DA RESPOSTA (OBRIGATÓRIO)
+Responda em JSON estruturado, sem texto adicional fora do JSON:
+
+
 {
-  "nome": "Nome do Programa de Treino",
-  "descricao": "Descrição breve do objetivo do treino",
-  "nivel": "Iniciante/Intermediário/Avançado",
-  "diasTreino": [
+  "workout_name": "string",
+  "goal": "string",
+  "frequency_per_week": number,
+  "days": [
     {
-      "dia": "Segunda-feira",
-      "grupoMuscular": "Peito e Tríceps",
-      "duracaoEstimada": 60,
-      "exercicios": [
+      "day": "string",
+      "focus": "string",
+      "exercises": [
         {
-          "nome": "Supino Reto",
-          "series": 4,
-          "repeticoes": "8-12",
-          "carga": "60-70% RM",
-          "descanso": "90 segundos",
-          "observacoes": "Mantenha a coluna neutra"
+          "name": "string",
+          "sets": number,
+          "reps": "string",
+          "rest_seconds": number,
+          "notes": "string"
         }
       ]
     }
   ],
-  "recomendacoesGerais": ["dica 1", "dica 2"],
-  "restricoesConsideradas": ["restrição 1", "restrição 2"]
+  "safety_notes": "string",
+  "progression_plan": "string"
 }
 
-Responda APENAS com o JSON válido, sem texto adicional antes ou depois.`;
+📤 REQUISITOS DE QUALIDADE
+
+Treino deve ser claro e prático
+
+Exercícios devem ser comuns (evitar nomes obscuros)
+
+Incluir instruções curtas nas notas
+
+Garantir progressão ao longo do tempo
+
+Evitar redundância de exercícios
+🔄 COMPATIBILIDADE COM HEVY
+
+Use nomes de exercícios padronizados (ex: "Bench Press", "Squat", "Deadlift")
+
+Evite abreviações incomuns
+
+Estruture séries e repetições de forma clara
+🎯 RESULTADO ESPERADO
+Retorne apenas o JSON válido, pronto para ser convertido em arquivo exportável.`;
 }
 
 // Função para fazer parsing seguro da resposta
