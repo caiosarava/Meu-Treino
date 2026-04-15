@@ -206,7 +206,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  FitGen AI
+                  Meu Treino
                 </h1>
                 <p className="text-xs text-muted-foreground hidden sm:block">
                   Treinos personalizados com IA
@@ -260,7 +260,7 @@ function App() {
             <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-blue-800">
-                Bem-vindo ao FitGen AI!
+                Bem-vindo ao Meu Treino
               </p>
               <p className="text-sm text-blue-700 mt-1">
                 Preencha seus dados para gerar um treino personalizado. Nossa IA 
@@ -322,7 +322,7 @@ function App() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
             <p>
-              FitGen AI - Treinos personalizados com inteligência artificial
+              Meu Treino - Treinos personalizados com inteligência artificial
             </p>
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
